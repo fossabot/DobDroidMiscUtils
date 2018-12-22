@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.0.1'
+    implementation 'com.github.andob:DobDroidMiscUtils:v1.0.2'
 }
 ```
 
@@ -28,6 +28,7 @@ dependencies {
 7. [Keyboard](#keyboard)
 8. [FileManager](#filemanager)
 9. [RetrofitX](#retrofit)
+10. [CacheDelegate](#cache)
 
 #### ToolbarX <a name="toolbarx"></a>
 
@@ -259,6 +260,21 @@ ApiClient.Instance.uploadPdf(fileUpload(context = this, path = AppFileManager.ge
         }
     })
 ```
+
+#### Cache delegate <a name="cache"></a>
+
+Use ``by cache()`` delegate to cache in memory values returned by other delegates. For instance, with kotpref library:
+
+```kotlin
+object Preferences : KotprefModel()
+{
+    var username by cached(stringPref())
+    var level by cached(intPref())
+    var firstRun by booleanPref(default = true)
+}
+```
+
+Username will be returned from memory cache. If not found in cache, it will be fetched by ``stringPref`` delegate, from ``SharedPreferences``.
 
 ### License
 
