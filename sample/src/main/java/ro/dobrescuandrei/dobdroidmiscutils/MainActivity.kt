@@ -14,6 +14,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import ro.dobrescuandrei.utils.*
+import java.lang.RuntimeException
+import java.util.concurrent.atomic.AtomicReference
 
 class MainActivity : AppCompatActivity()
 {
@@ -112,6 +114,29 @@ class MainActivity : AppCompatActivity()
                     Log.e("a", "success")
                 }
             })
+
+        Run.delayed(1000) {
+            println("delayed on ui")
+        }
+
+        Run.async {
+            println("on new thread")
+        }
+
+        Run.async(task = {
+            println("on new thread with result")
+            Thread.sleep(1000)
+            return@async 1
+        },
+        onAny = { println("hide loading dialog") },
+        onError = { it.printStackTrace() },
+        onSuccess = { println("result: $it") })
+
+        Run.async(task = {
+            println("on new thread without result")
+            Thread.sleep(1000)
+        },
+        onSuccess = { println("done!") })
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
