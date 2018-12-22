@@ -115,8 +115,14 @@ class MainActivity : AppCompatActivity()
                 }
             })
 
+        Run.handler=Handler(mainLooper)
+
+        Run.onUIThread {
+            println("on ui thread")
+        }
+
         Run.delayed(1000) {
-            println("delayed on ui")
+            println("delayed")
         }
 
         Run.async {
@@ -137,6 +143,25 @@ class MainActivity : AppCompatActivity()
             Thread.sleep(1000)
         },
         onSuccess = { println("done!") })
+
+        val dispatcher=DispatchOnce { println("yes") }
+        dispatcher.invoke() //prints yes
+        dispatcher.invoke() //doesn't do anything
+
+        Run.paralel(tasks = mutableListOf(
+        {
+            println("task 1")
+        },
+        {
+            println("task 2")
+        },
+        {
+            println("task 3")
+        }), onDone = DispatchOnce {
+            println("Done!")
+        }, onError = {
+            println("Exception: $it")
+        })
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)

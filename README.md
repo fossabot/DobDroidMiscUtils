@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.0.2'
+    implementation 'com.github.andob:DobDroidMiscUtils:v1.0.3'
 }
 ```
 
@@ -29,6 +29,7 @@ dependencies {
 8. [FileManager](#filemanager)
 9. [RetrofitX](#retrofit)
 10. [CacheDelegate](#cache)
+11. [Async](#async)
 
 #### ToolbarX <a name="toolbarx"></a>
 
@@ -275,6 +276,88 @@ object Preferences : KotprefModel()
 ```
 
 Username will be returned from memory cache. If not found in cache, it will be fetched by ``stringPref`` delegate, from ``SharedPreferences``.
+
+#### Async <a name="async"></a>
+
+In Application onCreate,
+
+```kotlin
+Run.handler=Handler(mainLooper)
+```
+
+To run on UI thread:
+
+```kotlin
+Run.onUIThread {
+    println("on ui thread")
+}
+```
+
+To run delayed on UI thread:
+
+```kotlin
+Run.delayed(1000) {
+    println("delayed")
+}
+```
+
+To run async on a new thread:
+
+```kotlin
+Run.async {
+    println("on new thread")
+}
+```
+
+To run async and return a result, handling success and error cases (promises style). `onAny` will alwats be called before ``onSuccess`` or ``onError``. Callback methods are run on UI thread  
+
+```kotlin
+Run.async(task = {
+    println("on new thread with result")
+    Thread.sleep(1000)
+    return@async 1
+},
+onAny = { println("hide loading dialog") },
+onError = { it.printStackTrace() },
+onSuccess = { println("result: $it") })
+```
+
+To run async without a result, handing success:
+
+```kotlin
+Run.async(task = {
+    println("on new thread without result")
+    Thread.sleep(1000)
+},
+onSuccess = { println("done!") })
+```
+
+To run a lambda only once:
+
+```kotlin
+val dispatcher=DispatchOnce { println("yes") }
+dispatcher.invoke() //prints yes
+dispatcher.invoke() //doesn't do anything
+```
+
+To run lambdas in paralel. ``onDone`` is called after all tasks are done. ``onError`` is called after a task throws exception. If a task has an error, remaining tasks will not be executed anymore. Specify ``maximumNumberOfThreads = value`` argument to set the maximum amount of paralel running threads at a given time. Default value is ``8``
+
+```kotlin
+Run.paralel(tasks = mutableListOf(
+{
+    println("task 1")
+},
+{
+    println("task 2")
+},
+{
+    println("task 3")
+}), onDone = DispatchOnce {
+    println("Done!")
+}, onError = {
+    println("Exception: $it")
+})
+```
 
 ### License
 
