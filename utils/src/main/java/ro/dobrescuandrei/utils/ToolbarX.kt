@@ -25,6 +25,7 @@ fun Toolbar.getData() : ToolbarXData
 fun Toolbar.setupBackIcon()
 {
     setNavigationIcon(R.drawable.ic_arrow_left_white_24dp)
+    setNavigationOnClickListener { (context as Activity).onBackPressed() }
 }
 
 fun Toolbar.setMenu(menu : Int)
