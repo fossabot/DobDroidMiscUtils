@@ -64,6 +64,13 @@ fun Toolbar.onCreateOptionsMenu(menuInflater : MenuInflater, menuObj : Menu?)
             menuInflater.inflate(menu, menuObj)
 }
 
+fun Toolbar.onCreateOptionsMenuFromFragment()
+{
+    val menu=getData().menu
+    if (menu!=0)
+        inflateMenu(menu)
+}
+
 fun Toolbar.setupHamburgerMenu()
 {
     val materialMenu=MaterialMenuDrawable(context, Color.WHITE, MaterialMenuDrawable.Stroke.THIN)
