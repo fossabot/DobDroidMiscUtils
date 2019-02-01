@@ -1,11 +1,8 @@
 package ro.dobrescuandrei.utils
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.AsyncTask
 import android.os.Handler
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit

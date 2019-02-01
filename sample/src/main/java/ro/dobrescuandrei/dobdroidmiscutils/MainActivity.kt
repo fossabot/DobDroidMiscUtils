@@ -14,8 +14,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import ro.dobrescuandrei.utils.*
-import java.lang.RuntimeException
-import java.util.concurrent.atomic.AtomicReference
 
 class MainActivity : AppCompatActivity()
 {
@@ -157,7 +155,6 @@ class MainActivity : AppCompatActivity()
         },
         {
             println("task 3")
-            throw RuntimeException("asdf")
         }), onDone = {
             println("Done!")
         }, onError = {
