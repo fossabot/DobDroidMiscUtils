@@ -125,6 +125,10 @@ class MainActivity : AppCompatActivity()
             println("delayed")
         }
 
+        Run.globalErrorHandler={ ex ->
+            ex.printStackTrace()
+        }
+
         Run.async {
             println("on new thread")
         }
@@ -144,10 +148,6 @@ class MainActivity : AppCompatActivity()
         },
         onSuccess = { println("done!") })
 
-        val dispatcher=DispatchOnce { println("yes") }
-        dispatcher.invoke() //prints yes
-        dispatcher.invoke() //doesn't do anything
-
         Run.paralel(tasks = mutableListOf(
         {
             println("task 1")
@@ -157,7 +157,8 @@ class MainActivity : AppCompatActivity()
         },
         {
             println("task 3")
-        }), onDone = DispatchOnce {
+            throw RuntimeException("asdf")
+        }), onDone = {
             println("Done!")
         }, onError = {
             println("Exception: $it")

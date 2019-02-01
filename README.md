@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.0.3'
+    implementation 'com.github.andob:DobDroidMiscUtils:v1.0.4'
 }
 ```
 
@@ -332,15 +332,7 @@ Run.async(task = {
 onSuccess = { println("done!") })
 ```
 
-To run a lambda only once:
-
-```kotlin
-val dispatcher=DispatchOnce { println("yes") }
-dispatcher.invoke() //prints yes
-dispatcher.invoke() //doesn't do anything
-```
-
-To run lambdas in paralel. ``onDone`` is called after all tasks are done. ``onError`` is called after a task throws exception. If a task has an error, remaining tasks will not be executed anymore. Specify ``maximumNumberOfThreads = value`` argument to set the maximum amount of paralel running threads at a given time. Default value is ``8``
+To run lambdas in paralel. ``onDone`` is called after all tasks are done. ``onError`` is called after a task throws exception. If a task has an error, remaining tasks will not be executed anymore. Specify ``maximumNumberOfThreads = value`` argument to set the maximum amount of paralel running threads at a given time. Default value is ``4``
 
 ```kotlin
 Run.paralel(tasks = mutableListOf(
@@ -352,11 +344,19 @@ Run.paralel(tasks = mutableListOf(
 },
 {
     println("task 3")
-}), onDone = DispatchOnce {
+}), onDone = {
     println("Done!")
 }, onError = {
     println("Exception: $it")
 })
+```
+
+To set a global error handler for ``paralel`` and ``async`` methods:
+
+```kotlin
+Run.globalErrorHandler={ ex ->
+    ex.printStackTrace()
+}
 ```
 
 ### License

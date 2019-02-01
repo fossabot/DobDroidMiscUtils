@@ -6,11 +6,16 @@ import android.os.AsyncTask
 import android.os.Handler
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
 object Run
 {
     lateinit var handler : Handler
+
+    var globalErrorHandler : ((Exception) -> (Unit))? = null
 
     fun onUIThread(toRun : () -> Unit)
     {
@@ -43,66 +48,59 @@ object Run
                 Run.onUIThread {
                     onAny?.invoke()
                     onError?.invoke(ex)
+                    globalErrorHandler?.invoke(ex)
                 }
             }
         }.start()
     }
 
     @SuppressLint("StaticFieldLeak")
-    fun paralel(maximumNumberOfThreads : Int = 8,
+    fun paralel(maximumNumberOfThreads : Int = 4,
                 numberOfRunningThreads : AtomicInteger = AtomicInteger(0),
                 tasks : MutableList<() -> (Any?)>,
-                onDone : DispatchOnce? = null,
+                onDone : (() -> (Unit))? = null,
                 onError : ((Exception) -> (Unit))? = null)
     {
-        val numberOfThreadsToStart=maximumNumberOfThreads-numberOfRunningThreads.get()
-        for (i in 1..numberOfThreadsToStart)
+        val runnableQueue=LinkedBlockingQueue<Runnable>(128)
+        val threadPoolExecutor=ThreadPoolExecutor(maximumNumberOfThreads, maximumNumberOfThreads, 1, TimeUnit.MINUTES, runnableQueue)
+        threadPoolExecutor.allowCoreThreadTimeOut(true)
+
+        numberOfRunningThreads.set(tasks.size)
+
+        for (task in tasks)
         {
-            if (tasks.isEmpty())
-                break
-
-            Thread {
-                var error : Exception? = null
-
-                try
+            object : AsyncTask<() -> (Any?), Void, Exception?>()
+            {
+                override fun doInBackground(vararg params : (() -> Any?)?) : Exception?
                 {
-                    tasks.removeAt(index = 0)()
-                }
-                catch (ex : Exception)
-                {
-                    error=ex
-                }
-                finally
-                {
-                    numberOfRunningThreads.decrementAndGet()
-
-                    if ((error is SocketTimeoutException)||(error is UnknownHostException))
+                    try
                     {
-                        tasks.clear()
-
-                        Run.onUIThread {
-                            onError?.invoke(error)
-                        }
+                        params[0]?.invoke()
+                        return null
                     }
-                    else if (numberOfRunningThreads.get()==0&&tasks.isEmpty())
+                    catch (ex : Exception)
                     {
-                        Run.onUIThread {
-                            onDone?.invoke()
-                        }
-                    }
-                    else
-                    {
-                        Run.paralel(
-                            maximumNumberOfThreads = maximumNumberOfThreads,
-                            numberOfRunningThreads = numberOfRunningThreads,
-                            tasks = tasks,
-                            onDone = onDone,
-                            onError = onError)
+                        return ex
                     }
                 }
-            }.start()
 
-            numberOfRunningThreads.incrementAndGet()
+                override fun onPostExecute(error : Exception?)
+                {
+                    super.onPostExecute(error)
+
+                    numberOfRunningThreads.set(numberOfRunningThreads.get()-1)
+
+                    if (error!=null)
+                    {
+                        onError?.invoke(error)
+                        globalErrorHandler?.invoke(error)
+                    }
+                    else if (numberOfRunningThreads.get()==0)
+                    {
+                        onDone?.invoke()
+                    }
+                }
+            }.executeOnExecutor(threadPoolExecutor, task)
         }
     }
 }
