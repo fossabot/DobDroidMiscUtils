@@ -30,6 +30,7 @@ dependencies {
 9. [RetrofitX](#retrofit)
 10. [CacheDelegate](#cache)
 11. [Async](#async)
+12. [Library dependencies](#dependencies)
 
 #### ToolbarX <a name="toolbarx"></a>
 
@@ -356,6 +357,29 @@ To set a global error handler for ``paralel`` and ``async`` methods:
 ```kotlin
 Run.globalErrorHandler={ ex ->
     ex.printStackTrace()
+}
+```
+
+#### Library dependencies <a name="dependencies"></a>
+
+This library depends on the following libraries:
+
+```
+implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+implementation 'com.android.support:appcompat-v7:28.0.0'
+implementation 'com.android.support:design:28.0.0'
+implementation 'com.android.support:recyclerview-v7:28.0.0'
+implementation 'com.balysv.materialmenu:material-menu:2.0.0'
+implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+```
+
+You can exclude any of those:
+
+```
+implementation ('com.github.andob:DobDroidMiscUtils:v1.0.7') {
+    exclude group: 'com.android.support'
+    exclude group: 'com.balysv.materialmenu'
+    exclude group: 'com.squareup.okhttp3'
 }
 ```
 
