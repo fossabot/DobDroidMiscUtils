@@ -2,6 +2,7 @@ package ro.dobrescuandrei.dobdroidmiscutils
 
 import android.Manifest
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -14,10 +15,19 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import ro.dobrescuandrei.utils.*
+import java.io.File
 
 class MainActivity : AppCompatActivity()
 {
     val permissionsHandler = PermissionsHandler()
+
+    fun findFilesIn(directory : File) : List<File> = yielding {
+        directory.listFiles()?.forEach { file ->
+            if (file.isDirectory)
+                yield(findFilesIn(directory = file))
+            else yield(file)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -160,6 +170,9 @@ class MainActivity : AppCompatActivity()
         }, onError = {
             println("Exception: $it")
         })
+
+        val files=findFilesIn(directory = File(Environment.getExternalStorageDirectory().absolutePath))
+        for (file in files) println(file)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)

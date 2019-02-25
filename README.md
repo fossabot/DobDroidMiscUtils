@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.0.7'
+    implementation 'com.github.andob:DobDroidMiscUtils:v1.0.8'
 }
 ```
 
@@ -30,7 +30,8 @@ dependencies {
 9. [RetrofitX](#retrofit)
 10. [CacheDelegate](#cache)
 11. [Async](#async)
-12. [Library dependencies](#dependencies)
+12. [Yield](#yield)
+13. [Library dependencies](#dependencies)
 
 #### ToolbarX <a name="toolbarx"></a>
 
@@ -357,6 +358,36 @@ To set a global error handler for ``paralel`` and ``async`` methods:
 ```kotlin
 Run.globalErrorHandler={ ex ->
     ex.printStackTrace()
+}
+```
+
+#### Yield expressions <a name="yield"></a>
+
+Similar to C# / Scala ``yield`` keyboard:
+
+```kotlin
+fun findFilesIn(directory : File) : List<File>
+{
+    val files=mutableListOf<File>()
+    directory.listFiles()?.forEach { file ->
+        if (file.isDirectory)
+            files.addAll(findFilesIn(directory = file))
+        else files.add(file)
+    }
+
+    return files
+}
+```
+
+...is equivalent to
+
+```kotlin
+fun findFilesIn(directory : File) : List<File> = yielding {
+    directory.listFiles()?.forEach { file ->
+        if (file.isDirectory)
+            yield(findFilesIn(directory = file))
+        else yield(file)
+    }
 }
 ```
 
