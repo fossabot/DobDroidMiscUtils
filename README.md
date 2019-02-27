@@ -363,7 +363,7 @@ Run.globalErrorHandler={ ex ->
 
 #### Yield expressions <a name="yield"></a>
 
-Similar to C# / Scala ``yield`` keyboard:
+Similar to C# / Scala ``yield`` keyword:
 
 ```kotlin
 fun findFilesIn(directory : File) : List<File>
