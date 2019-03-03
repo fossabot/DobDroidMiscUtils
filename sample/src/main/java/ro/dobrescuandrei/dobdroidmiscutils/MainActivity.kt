@@ -123,54 +123,6 @@ class MainActivity : AppCompatActivity()
                 }
             })
 
-        Run.handler=Handler(mainLooper)
-
-        Run.onUIThread {
-            println("on ui thread")
-        }
-
-        Run.delayed(1000) {
-            println("delayed")
-        }
-
-        Run.globalErrorHandler={ ex ->
-            ex.printStackTrace()
-        }
-
-        Run.async {
-            println("on new thread")
-        }
-
-        Run.async(task = {
-            println("on new thread with result")
-            Thread.sleep(1000)
-            return@async 1
-        },
-        onAny = { println("hide loading dialog") },
-        onError = { it.printStackTrace() },
-        onSuccess = { println("result: $it") })
-
-        Run.async(task = {
-            println("on new thread without result")
-            Thread.sleep(1000)
-        },
-        onSuccess = { println("done!") })
-
-        Run.paralel(tasks = mutableListOf(
-        {
-            println("task 1")
-        },
-        {
-            println("task 2")
-        },
-        {
-            println("task 3")
-        }), onDone = {
-            println("Done!")
-        }, onError = {
-            println("Exception: $it")
-        })
-
         val files=findFilesIn(directory = File(Environment.getExternalStorageDirectory().absolutePath))
         for (file in files) println(file)
     }
