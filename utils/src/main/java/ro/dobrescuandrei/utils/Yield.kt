@@ -2,7 +2,10 @@ package ro.dobrescuandrei.utils
 
 class YieldContext<T>
 {
-    val result=mutableListOf<T>()
+    @PublishedApi
+    internal val result=mutableListOf<T>()
+
+    fun index() = result.size
 
     fun yield(obj : T)
     {

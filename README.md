@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.0.9'
+    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.0'
 }
 ```
 
