@@ -23,7 +23,7 @@ class YieldContext<T>
     }
 }
 
-inline fun <T> yielding(block : YieldContext<T>.() -> (Unit)) : List<T>
+inline fun <T> yieldListOf(block : YieldContext<T>.() -> (Unit)) : List<T>
 {
     val yieldContext=YieldContext<T>()
     block(yieldContext)
