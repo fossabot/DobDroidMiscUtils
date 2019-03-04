@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.0'
+    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.1'
 }
 ```
 
@@ -299,7 +299,7 @@ fun findFilesIn(directory : File) : List<File>
 ...is equivalent to
 
 ```kotlin
-fun findFilesIn(directory : File) : List<File> = yielding {
+fun findFilesIn(directory : File) : List<File> = yieldListOf<File> {
     directory.listFiles()?.forEach { file ->
         if (file.isDirectory)
             yield(findFilesIn(directory = file))

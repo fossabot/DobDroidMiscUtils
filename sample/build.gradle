@@ -27,5 +27,5 @@ dependencies {
     implementation 'com.balysv.materialmenu:material-menu:2.0.0'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.11.0'
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.0.9'
+    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.1'
 }

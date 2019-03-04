@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity()
 {
     val permissionsHandler = PermissionsHandler()
 
-    fun findFilesIn(directory : File) : List<File> = yielding {
+    fun findFilesIn(directory : File) : List<File> = yieldListOf<File> {
         directory.listFiles()?.forEach { file ->
             if (file.isDirectory)
                 yield(findFilesIn(directory = file))
