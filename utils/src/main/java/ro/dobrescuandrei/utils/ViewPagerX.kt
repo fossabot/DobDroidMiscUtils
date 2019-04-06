@@ -1,6 +1,6 @@
 package ro.dobrescuandrei.utils
 
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 
 fun ViewPager.setOnPageChangedListener(listener : (Int) -> (Unit))
 {

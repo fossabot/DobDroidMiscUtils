@@ -2,7 +2,7 @@ package ro.dobrescuandrei.utils
 
 import android.app.Activity
 import android.graphics.Color
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
