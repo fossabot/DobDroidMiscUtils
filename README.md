@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.1'
+    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.2'
 }
 ```
 
@@ -313,7 +313,7 @@ fun findFilesIn(directory : File) : List<File> = yieldListOf<File> {
 This library depends on the following libraries:
 
 ```
-implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 implementation 'com.android.support:appcompat-v7:28.0.0'
 implementation 'com.android.support:design:28.0.0'
 implementation 'com.android.support:recyclerview-v7:28.0.0'
