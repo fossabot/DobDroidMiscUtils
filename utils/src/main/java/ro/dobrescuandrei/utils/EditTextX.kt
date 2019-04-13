@@ -2,6 +2,7 @@ package ro.dobrescuandrei.utils
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 
 fun EditText.setOnTextChangedListener(listener : (String) -> (Unit)) {
@@ -28,4 +29,19 @@ fun EditText.setOnEditorActionListener(listener : (Int) -> (Unit))
         listener(actionId)
         return@setOnEditorActionListener true
     }
+}
+
+fun EditText.setOnDoneClickedListener(listener: () -> Unit)
+{
+    setOnEditorActionListener { view, actionId, event ->
+        if (actionId==EditorInfo.IME_ACTION_DONE)
+            listener()
+        return@setOnEditorActionListener true
+    }
+}
+
+fun EditText.openKeyboard()
+{
+    requestFocus()
+    Keyboard.open(on = context)
 }

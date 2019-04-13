@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.4'
+    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.5'
 }
 ```
 
@@ -134,6 +134,12 @@ editText.setOnEditorActionListener { actionId ->
 }
 ```
 
+```kotlin
+editText.setOnDoneClickedListener {
+    Log.e("a", "enter pressed")
+}
+```
+
 #### ScreenSize <a name="screensize"></a>
 
 Used to get the width, height and density of the screen. In Application Class ``onCreate`` method:
@@ -186,6 +192,10 @@ Keyboard.open(on = context)
 ```kotlin
 Keyboard.close(on = context)
 ```
+
+```kotlin
+editText.openKeyboard()
+``` 
 
 #### FileManager <a name="filemanager"></a>
 
