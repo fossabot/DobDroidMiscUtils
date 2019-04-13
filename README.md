@@ -334,7 +334,7 @@ implementation 'com.squareup.okhttp3:okhttp:3.12.0'
 You can exclude any of those:
 
 ```
-implementation ('com.github.andob:DobDroidMiscUtils:v1.0.7') {
+implementation ('com.github.andob:DobDroidMiscUtils:v1.0.8') {
     exclude group: 'com.android.support'
     exclude group: 'com.balysv.materialmenu'
     exclude group: 'com.squareup.okhttp3'

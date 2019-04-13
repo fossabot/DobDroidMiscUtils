@@ -25,7 +25,7 @@ fun Toolbar.getData() : ToolbarXData
 fun Toolbar.setupBackIcon()
 {
     setNavigationIcon(R.drawable.ic_arrow_left_white_24dp)
-    setNavigationOnClickListener { (context as Activity).onBackPressed() }
+    setNavigationOnClickListener { context.asActivity()!!.onBackPressed() }
 }
 
 fun Toolbar.setMenu(menu : Int)
@@ -40,7 +40,7 @@ fun Toolbar.onOptionsItemSelected(item : MenuItem?)
 {
     if (item?.itemId==android.R.id.home)
     {
-        (context as Activity).onBackPressed()
+        context.asActivity()!!.onBackPressed()
     }
     else
     {
@@ -70,7 +70,7 @@ fun Toolbar.onCreateOptionsMenuFromFragment()
     if (menu!=0)
         inflateMenu(menu)
 }
-
+a
 fun Toolbar.setupHamburgerMenu()
 {
     val materialMenu=MaterialMenuDrawable(context, Color.WHITE, MaterialMenuDrawable.Stroke.THIN)

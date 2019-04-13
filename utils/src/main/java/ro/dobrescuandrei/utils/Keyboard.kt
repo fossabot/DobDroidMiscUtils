@@ -6,10 +6,7 @@ import android.view.inputmethod.InputMethodManager
 
 object Keyboard
 {
-    fun close(on: Context)
-    {
-        close(on as Activity)
-    }
+    fun close(on: Context) = close(on.asActivity()!!)
 
     fun close(on: Activity)
     {
@@ -21,10 +18,7 @@ object Keyboard
                 .windowToken, 0)
     }
 
-    fun open(on: Context)
-    {
-        open(on as Activity)
-    }
+    fun open(on: Context) = open(on.asActivity()!!)
 
     fun open(on: Activity)
     {
