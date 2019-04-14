@@ -5,12 +5,12 @@ import android.content.res.Resources
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import java.io.Serializable
 
-//todo add documentation
 class Color
 (
     val value : Int
-)
+) : Serializable
 {
     constructor(code : String)
         : this(android.graphics.Color.parseColor(code))
@@ -34,8 +34,18 @@ class Color
 
 object Colors
 {
-    val Black = Color(android.graphics.Color.BLACK)
-    val White = Color(android.graphics.Color.WHITE)
+    val Black       : Color get() = Color(android.graphics.Color.BLACK)
+    val Blue        : Color get() = Color(android.graphics.Color.BLUE)
+    val Cyan        : Color get() = Color(android.graphics.Color.CYAN)
+    val DarkGray    : Color get() = Color(android.graphics.Color.DKGRAY)
+    val Gray        : Color get() = Color(android.graphics.Color.GRAY)
+    val Green       : Color get() = Color(android.graphics.Color.GREEN)
+    val LightGray   : Color get() = Color(android.graphics.Color.LTGRAY)
+    val Magenta     : Color get() = Color(android.graphics.Color.MAGENTA)
+    val Red         : Color get() = Color(android.graphics.Color.RED)
+    val Transparent : Color get() = Color(android.graphics.Color.TRANSPARENT)
+    val White       : Color get() = Color(android.graphics.Color.WHITE)
+    val Yellow      : Color get() = Color(android.graphics.Color.YELLOW)
 }
 
 fun Context.getKolor(colorResourceId : Int) : Color =

@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.5'
+    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.7.1'
 }
 ```
 
@@ -23,14 +23,17 @@ dependencies {
 2. [BottomNavigationViewX](#bottomviewnavigationx)
 3. [ViewPagerX](#viewpager)
 4. [EditTextX](#edittext)
-5. [ScreenSize](#screensize)
-6. [PermissionsHandler](#permissions)
-7. [Keyboard](#keyboard)
-8. [FileManager](#filemanager)
-9. [RetrofitX](#retrofit)
-10. [CacheDelegate](#cache)
-11. [Yield](#yield)
-12. [Library dependencies](#dependencies)
+5. [ViewX](#viewx)
+6. [ScreenSize](#screensize)
+7. [PermissionsHandler](#permissions)
+8. [Keyboard](#keyboard)
+9. [FileManager](#filemanager)
+10. [Color](#color)
+11. [RetrofitX](#retrofit)
+12. [JodaTimeX](#jodatimex)
+13. [CacheDelegate](#cache)
+14. [Yield](#yield)
+15. [Library dependencies](#dependencies)
 
 #### ToolbarX <a name="toolbarx"></a>
 
@@ -140,6 +143,21 @@ editText.setOnDoneClickedListener {
 }
 ```
 
+#### ViewX <a name="viewx"></a>
+
+View eXtension methods.
+
+```kotlin
+//LongClick listener without having to return an boolean representing if whe SDK should further consume the touch event
+setOnLongKlickListener {
+}
+
+//or
+setOnLongKlickListener(shouldConsumeTouchEvent = false) {
+    
+}
+``` 
+
 #### ScreenSize <a name="screensize"></a>
 
 Used to get the width, height and density of the screen. In Application Class ``onCreate`` method:
@@ -211,6 +229,34 @@ object AppFileManager : FileManager()
 }
 ```
 
+#### Color <a name="color"></a>
+
+I don't know why in Android SDK, colors are represented as simple integers, and not objects of the ``Color`` class (this is clearly an architectural mistake, in such a OOP-centric language like java). This library provides a wrapper ``Color`` class around color integers:
+
+```kotlin
+import ro.dobrescuandrei.utils.Color
+```
+
+```kotlin
+var sdkColor : Int=android.graphics.Color.BLACK
+var color=Color(sdkColor) //convert from int color to Color object
+color=Color(code = "#000000")
+color=Color(red = 100, green = 123, blue = 255)
+color=Color(red = 100, green = 123, blue = 255, alpha = 100)
+println("components: ${color.red} ${color.green} ${color.blue} ${color.alpha}")
+println("color is ${if (color.isDark()) "dark" else "light"}")
+color=Colors.Black //predefined colors, similar to Color.BLACK
+sdkColor=color.value //convert from Color object to int color
+```
+
+```kotlin
+//get/setKolor -> instances of Color class
+//SDK's get/setColor -> ugly ints :|
+val color : Color=context.getKolor(R.color.blue)
+textView.setBackgroundKolor(color)
+textView.setTextKolor(color)
+```
+
 #### Retrofit extensions <a name="retrofit"></a>
 
 Download and upload files:
@@ -271,6 +317,34 @@ ApiClient.Instance.uploadPdf(fileUpload(context = this, path = AppFileManager.ge
             Log.e("a", "success")
         }
     })
+```
+
+#### JodaTime extensions <a name="jodatimex"></a>
+
+Nil ``DateTime`` support (null object pattern) and ``Calendar`` conversions
+
+```kotlin
+var jodaDateTime : DateTime = NilDateTime //01.01.1970
+println("${jodaDateTime.isNil()} ${jodaDateTime.isNotNil()}")
+val calendar : Calendar = jodaDateTime.asCalendar()
+jodaDateTime=calendar.asDateTime()
+```
+
+``SimpleDateFormatter`` wrapper:
+
+```kotlin
+fun DateTimeFormatter.date() = formatWith(pattern = "dd.MM.yyyy")
+```
+
+```kotlin
+println("Date is ${jodaDateTime.format().date()}")
+```
+
+``min`` and ``max``:
+
+```kotlin
+var result : DateTime=max(jodaDateTime, jodaDateTime.plusDays(1))
+result=min(jodaDateTime, jodaDateTime.plusDays(1))
 ```
 
 #### Cache delegate <a name="cache"></a>

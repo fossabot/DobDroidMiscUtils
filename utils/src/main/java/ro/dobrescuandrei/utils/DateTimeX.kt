@@ -5,7 +5,6 @@ import org.joda.time.DateTime
 import java.text.SimpleDateFormat
 import java.util.*
 
-//todo add documentation
 val NilDateTime = DateTime(0L)
 
 fun DateTime.isNil() = millis==0L

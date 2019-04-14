@@ -2,10 +2,9 @@ package ro.dobrescuandrei.utils
 
 import android.view.View
 
-//todo add documentation
-fun View.setOnLongKlickListener(shouldConsumeTouchEvent : Boolean = false, listener : () -> (Unit)) {
+fun View.setOnLongKlickListener(shouldConsumeTouchEvent : Boolean = false, listener : (View) -> (Unit)) {
     setOnLongClickListener {
-        listener()
+        listener(it)
         return@setOnLongClickListener /*isTouchEventConsumed=*/ shouldConsumeTouchEvent
     }
 }
