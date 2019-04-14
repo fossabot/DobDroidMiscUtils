@@ -324,9 +324,9 @@ This library depends on the following libraries:
 
 ```
 implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-implementation 'com.android.support:appcompat-v7:28.0.0'
-implementation 'com.android.support:design:28.0.0'
-implementation 'com.android.support:recyclerview-v7:28.0.0'
+implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
+implementation 'com.google.android.material:material:1.1.0-alpha05'
+implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha04'
 implementation 'com.balysv.materialmenu:material-menu:2.0.0'
 implementation 'com.squareup.okhttp3:okhttp:3.12.0'
 ```
@@ -334,10 +334,11 @@ implementation 'com.squareup.okhttp3:okhttp:3.12.0'
 You can exclude any of those:
 
 ```
-implementation ('com.github.andob:DobDroidMiscUtils:v1.0.8') {
+implementation ('com.github.andob:DobDroidMiscUtils:v1.1.7') {
     exclude group: 'com.android.support'
     exclude group: 'com.balysv.materialmenu'
     exclude group: 'com.squareup.okhttp3'
+    exclude group: 'joda-time'
 }
 ```
 
