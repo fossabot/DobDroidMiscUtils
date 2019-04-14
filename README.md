@@ -147,14 +147,15 @@ editText.setOnDoneClickedListener {
 
 View eXtension methods.
 
+LongClick listener without having to return an boolean representing if whe SDK should further consume the touch event:
+
 ```kotlin
-//LongClick listener without having to return an boolean representing if whe SDK should further consume the touch event
 setOnLongKlickListener {
 }
+```
 
-//or
+```kotlin
 setOnLongKlickListener(shouldConsumeTouchEvent = false) {
-    
 }
 ``` 
 
@@ -231,7 +232,7 @@ object AppFileManager : FileManager()
 
 #### Color <a name="color"></a>
 
-I don't know why in Android SDK, colors are represented as simple integers, and not objects of the ``Color`` class (this is clearly an architectural mistake, in such a OOP-centric language like java). This library provides a wrapper ``Color`` class around color integers:
+I don't know why in Android SDK, colors are represented as simple integers, and not objects of the ``Color`` class (this is clearly an architectural mistake, in such an OOP-centric language like java). This library provides a wrapper ``Color`` class around color integers:
 
 ```kotlin
 import ro.dobrescuandrei.utils.Color
@@ -251,7 +252,7 @@ sdkColor=color.value //convert from Color object to int color
 
 ```kotlin
 //get/setKolor -> instances of Color class
-//SDK's get/setColor -> ugly ints :|
+//SDK's get/setColor -> ints :|
 val color : Color=context.getKolor(R.color.blue)
 textView.setBackgroundKolor(color)
 textView.setTextKolor(color)
@@ -330,17 +331,20 @@ val calendar : Calendar = jodaDateTime.asCalendar()
 jodaDateTime=calendar.asDateTime()
 ```
 
-``SimpleDateFormatter`` wrapper:
+``DateTimeFormatter`` is an empty ``SimpleDateFormatter`` wrapper. You need to customise this class with your formatting use cases by adding your own extension methods:
 
 ```kotlin
 fun DateTimeFormatter.date() = formatWith(pattern = "dd.MM.yyyy")
+fun DateTimeFormatter.dateTime() = formatWith(pattern = "dd.MM.yyyy HH:mm")
 ```
+
+And then:
 
 ```kotlin
 println("Date is ${jodaDateTime.format().date()}")
 ```
 
-``min`` and ``max``:
+Support for ``min`` and ``max`` operations:
 
 ```kotlin
 var result : DateTime=max(jodaDateTime, jodaDateTime.plusDays(1))
@@ -403,6 +407,7 @@ implementation 'com.google.android.material:material:1.1.0-alpha05'
 implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha04'
 implementation 'com.balysv.materialmenu:material-menu:2.0.0'
 implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+implementation 'net.danlew:android.joda:2.10.1.2'
 ```
 
 You can exclude any of those:
