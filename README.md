@@ -344,13 +344,6 @@ And then:
 println("Date is ${jodaDateTime.format().date()}")
 ```
 
-Support for ``min`` and ``max`` operations:
-
-```kotlin
-var result : DateTime=max(jodaDateTime, jodaDateTime.plusDays(1))
-result=min(jodaDateTime, jodaDateTime.plusDays(1))
-```
-
 #### Cache delegate <a name="cache"></a>
 
 Use ``by cache()`` delegate to cache in memory values returned by other delegates. For instance, with kotpref library:
