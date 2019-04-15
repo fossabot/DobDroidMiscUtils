@@ -232,7 +232,7 @@ object AppFileManager : FileManager()
 
 #### Color <a name="color"></a>
 
-I don't know why in Android SDK, colors are represented as simple integers, and not objects of the ``Color`` class (this is clearly an architectural mistake, in such an OOP-centric language like java). This library provides a wrapper ``Color`` class around color integers:
+I don't know why in Android SDK, colors are represented as simple integers, and not objects of some ``Color`` class. This library provides a wrapper ``Color`` class around color integers:
 
 ```kotlin
 import ro.dobrescuandrei.utils.Color
