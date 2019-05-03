@@ -1,17 +1,14 @@
 package ro.dobrescuandrei.dobdroidmiscutils
 
 import android.Manifest
-import android.content.res.TypedArray
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.ResponseBody
 import retrofit2.Call
