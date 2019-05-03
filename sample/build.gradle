@@ -11,6 +11,13 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -26,6 +33,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha04'
     implementation 'com.balysv.materialmenu:material-menu:2.0.0'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.11.0'
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
+//    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.1'
+    implementation project(":utils")
 }

@@ -12,12 +12,12 @@ class YieldContext<T>
         result.add(obj)
     }
 
-    fun yield(list : Collection<T>)
+    fun yieldAll(list : Collection<T>)
     {
         result.addAll(list)
     }
 
-    fun yield(array : Array<T>)
+    fun yieldAll(array : Array<T>)
     {
         result.addAll(array)
     }

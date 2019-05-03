@@ -1,6 +1,7 @@
 package ro.dobrescuandrei.dobdroidmiscutils
 
 import android.Manifest
+import android.content.res.TypedArray
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
@@ -9,6 +10,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -24,7 +27,7 @@ class MainActivity : AppCompatActivity()
     fun findFilesIn(directory : File) : List<File> = yieldListOf<File> {
         directory.listFiles()?.forEach { file ->
             if (file.isDirectory)
-                yield(findFilesIn(directory = file))
+                yieldAll(findFilesIn(directory = file))
             else yield(file)
         }
     }
@@ -125,6 +128,10 @@ class MainActivity : AppCompatActivity()
 
         val files=findFilesIn(directory = File(Environment.getExternalStorageDirectory().absolutePath))
         for (file in files) println(file)
+
+        val list=listOf(1, 2, 3, null, 3)
+        val set=list.mapToSet { it } //setOf(1,2,3)
+        println(set)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)

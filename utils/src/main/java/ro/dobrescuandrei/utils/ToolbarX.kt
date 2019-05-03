@@ -1,11 +1,10 @@
 package ro.dobrescuandrei.utils
 
-import android.app.Activity
 import android.graphics.Color
-import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import com.balysv.materialmenu.MaterialMenu
 import com.balysv.materialmenu.MaterialMenuDrawable
 

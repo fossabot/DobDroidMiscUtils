@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.7.1'
+    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.8'
 }
 ```
 
@@ -33,7 +33,10 @@ dependencies {
 12. [JodaTimeX](#jodatimex)
 13. [CacheDelegate](#cache)
 14. [Yield](#yield)
-15. [Library dependencies](#dependencies)
+15. [CollectionX](#collection)
+16. [TypedArrayX](#typedarray)
+17. [StringJsonAdapter (Gson)](#stringjsonadapter)
+17. [Library dependencies](#dependencies)
 
 #### ToolbarX <a name="toolbarx"></a>
 
@@ -322,7 +325,7 @@ ApiClient.Instance.uploadPdf(fileUpload(context = this, path = AppFileManager.ge
 
 #### JodaTime extensions <a name="jodatimex"></a>
 
-Nil ``DateTime`` support (null object pattern) and ``Calendar`` conversions
+Nil ``DateTime`` / ``LocalDate`` / ``LocalTime`` support (null object pattern) and ``Calendar`` conversions
 
 ```kotlin
 var jodaDateTime : DateTime = NilDateTime //01.01.1970
@@ -341,7 +344,18 @@ fun DateTimeFormatter.dateTime() = formatWith(pattern = "dd.MM.yyyy HH:mm")
 And then:
 
 ```kotlin
-println("Date is ${jodaDateTime.format().date()}")
+println("Date is ${jodaDateTime.format().dateTime()}")
+println("Date is ${jodaLocalDate.format().date()}")
+```
+
+Gson type adapters to convert ``DateTime`` / ``LocalDate`` / ``LocalTime`` to json string:
+
+```kotlin
+val gson : Gson = GsonBuilder()
+    .registerTypeAdapter(DateTime::class.java, DateTimeJsonAdapter("dd.MM.yyyy HH:mm"))
+    .registerTypeAdapter(LocalDate::class.java, LocalDateJsonAdapter("dd.MM.yyyy"))
+    .registerTypeAdapter(LocalTime::class.java, LocalTimeJsonAdapter("HH:mm"))
+    .create()
 ```
 
 #### Cache delegate <a name="cache"></a>
@@ -383,10 +397,73 @@ fun findFilesIn(directory : File) : List<File>
 fun findFilesIn(directory : File) : List<File> = yieldListOf<File> {
     directory.listFiles()?.forEach { file ->
         if (file.isDirectory)
-            yield(findFilesIn(directory = file))
+            yieldAll(findFilesIn(directory = file))
         else yield(file)
     }
 }
+```
+
+#### CollectionX <a name="collection"></a>
+
+``Collection`` extensions:
+
+```kotlin
+val list=listOf(1, 2, 3, null, 3)
+val set=list.mapToSet { it } //setOf(1,2,3)
+```
+
+#### TypedArrayX <a name="typedarray"></a>
+
+``TypedArray`` extensions:
+
+```kotlin
+constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+{
+    val args : TypedArray=context.obtainStyledAttributes(attrs, R.styleable.SampleCustomView)
+    val someBoolean : Boolean=args.getBoolean(R.styleable.SampleCustomView_scv_someBoolean, false)
+    val someInt : Int=args.getInt(R.styleable.SampleCustomView_scv_someInt, 0)
+    val someFloat : Float=args.getFloat(R.styleable.SampleCustomView_scv_someFloat, 0f)
+    val someColor : Color=Color(args.getColor(R.styleable.SampleCustomView_scv_someColor, Colors.Black.value))
+    val someDimension : Float=args.getDimension(R.styleable.SampleCustomView_scv_someDimension, 0f)
+    val someDimensionInPx : Int=args.getDimensionPixelSize(R.styleable.SampleCustomView_scv_someDimension, 0)
+    val someResourceId : Int=args.getResourceId(R.styleable.SampleCustomView_scv_someResource, 0)
+    args.recycle()
+}
+```
+
+Is equivalent to:
+
+```kotlin
+constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+{
+    val args : TypedArray=context.obtainStyledAttributes(attrs, R.styleable.SampleCustomView)
+    val someBoolean : Boolean=args.getBoolean(R.styleable.SampleCustomView_scv_someBoolean)?:false
+    val someInt : Int=args.getInt(R.styleable.SampleCustomView_scv_someInt)?:0
+    val someFloat : Float=args.getFloat(R.styleable.SampleCustomView_scv_someFloat)?:0f
+    val someColor : Color=args.getKolor(R.styleable.SampleCustomView_scv_someColor)?:Colors.Black
+    val someDimension : Float=args.getDimension(R.styleable.SampleCustomView_scv_someDimension)?:0f
+    val someDimensionInPx : Int=args.getDimensionInPixels(R.styleable.SampleCustomView_scv_someDimension)?:0
+    val someResourceId : Int?=args.getResourceId(R.styleable.SampleCustomView_scv_someResource)
+    args.recycle()
+}
+```
+
+#### StringJsonAdapter (Gson) <a name="stringjsonadapter"></a>
+
+``StringJsonAdapter`` is a Gson ``TypeAdapter`` that converts non-nullable strings:
+
+```kotlin
+class DemoJson(val some : String, val another : String)
+```
+
+```kotlin
+val gson : Gson = GsonBuilder()
+    .registerTypeAdapter(String::class.java, StringJsonAdapter(defaultValue = "-"))
+    .create()
+
+var json="{\"some\": null, \"another\": \"test\"}"
+val obj=gson.fromJson(json, DemoJson::class.java) //obj.some="-"; obj.another="test"
+json=gson.toJson(obj) //json={"some": null, "another": "test"}
 ```
 
 #### Library dependencies <a name="dependencies"></a>
@@ -401,6 +478,7 @@ implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha04'
 implementation 'com.balysv.materialmenu:material-menu:2.0.0'
 implementation 'com.squareup.okhttp3:okhttp:3.12.0'
 implementation 'net.danlew:android.joda:2.10.1.2'
+implementation 'com.google.code.gson:gson:2.8.5'
 ```
 
 You can exclude any of those:

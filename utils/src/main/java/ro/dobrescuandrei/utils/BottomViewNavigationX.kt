@@ -1,7 +1,7 @@
 package ro.dobrescuandrei.utils
 
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 fun BottomNavigationView.setupWithViewPager(viewPager : ViewPager, initialTab : Int = 0)
 {
