@@ -53,11 +53,18 @@ fun Calendar.asDateTime() : DateTime = DateTime(timeInMillis)
 fun Calendar.asLocalDate() : LocalDate = this.asDateTime().toLocalDate()
 fun Calendar.asLocalTime() : LocalTime = this.asDateTime().toLocalTime()
 
-fun max(dateTime1 : DateTime, dateTime2 : DateTime) : DateTime =
+fun max(dateTime1 : DateTime, dateTime2 : DateTime) : DateTime  =
     DateTime(Math.max(dateTime1.millis, dateTime2.millis))
-
-fun min(dateTime1 : DateTime, dateTime2 : DateTime) : DateTime =
+fun max(date1 : LocalDate, date2 : LocalDate) : LocalDate =
+    max(date1.toDateTimeAtStartOfDay(), date2.toDateTimeAtStartOfDay()).toLocalDate()
+fun max(time1 : LocalTime, time2 : LocalTime) : LocalTime =
+    max(time1.toDateTimeToday(), time2.toDateTimeToday()).toLocalTime()
+fun min(dateTime1 : DateTime, dateTime2 : DateTime) : DateTime  =
     DateTime(Math.min(dateTime1.millis, dateTime2.millis))
+fun min(date1 : LocalDate, date2 : LocalDate) : LocalDate =
+    min(date1.toDateTimeAtStartOfDay(), date2.toDateTimeAtStartOfDay()).toLocalDate()
+fun min(time1 : LocalTime, time2 : LocalTime) : LocalTime =
+    min(time1.toDateTimeToday(), time2.toDateTimeToday()).toLocalTime()
 
 class DateTimeJsonAdapter
 (
