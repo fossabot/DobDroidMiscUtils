@@ -2,6 +2,7 @@ package ro.dobrescuandrei.dobdroidmiscutils
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import ro.dobrescuandrei.utils.RetrofitUtils
 import java.util.concurrent.TimeUnit
 
 abstract class ApiClient
@@ -12,6 +13,7 @@ abstract class ApiClient
             Retrofit.Builder()
                 .baseUrl("http://www.pdf995.com/")
                 .client(OkHttpClient.Builder()
+                    .socketFactory(RetrofitUtils.newSocketFactoryBypassingConnectivityHealthChecks())
                     .followRedirects(true)
                     .connectTimeout(60, TimeUnit.SECONDS)
                     .writeTimeout(60, TimeUnit.SECONDS)

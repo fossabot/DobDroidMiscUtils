@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity()
                 Thread {
                     try
                     {
-                        downloadFile(response.body()!!, outputPath = AppFileManager.getSampleFilePath())
+                        RetrofitUtils.downloadFile(response.body()!!, outputPath = AppFileManager.getSampleFilePath())
                         Log.e("a", "success")
                     }
                     catch (ex : Exception)
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity()
             }
         })
 
-        ApiClient.Instance.uploadPdf(fileUpload(context = this,
+        ApiClient.Instance.uploadPdf(RetrofitUtils.fileUpload(context = this,
             path = AppFileManager.getSampleFilePath()))
             .enqueue(object : Callback<Unit?>
             {
