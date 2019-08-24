@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.1.8'
+    implementation 'com.github.andob:DobDroidMiscUtils:v1.2.0'
 }
 ```
 
@@ -293,7 +293,7 @@ ApiClient.Instance.downloadPdf().enqueue(object : Callback<ResponseBody>
         Thread {
             try
             {
-                downloadFile(response.body()!!, outputPath = AppFileManager.getSampleFilePath())
+                RetrofitUtils.downloadFile(response.body()!!, outputPath = AppFileManager.getSampleFilePath())
                 Log.e("a", "success")
             }
             catch (ex : Exception)
@@ -308,7 +308,7 @@ ApiClient.Instance.downloadPdf().enqueue(object : Callback<ResponseBody>
 To upload a file:
 
 ```kotlin
-ApiClient.Instance.uploadPdf(fileUpload(context = this, path = AppFileManager.getSampleFilePath()))
+ApiClient.Instance.uploadPdf(RetrofitUtils.fileUpload(context = this, path = AppFileManager.getSampleFilePath()))
     .enqueue(object : Callback<Unit?>
     {
         override fun onFailure(call: Call<Unit?>, t: Throwable)
