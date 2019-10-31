@@ -39,19 +39,19 @@ class DateTimeFormatter
     fun formatWith(pattern : String) = SimpleDateFormat(pattern).format(dateTime.toDate())?:""
 }
 
-fun DateTime.asCalendar() : Calendar
+fun DateTime.toCalendar() : Calendar
 {
     val calendar= Calendar.getInstance()
     calendar.timeInMillis=millis
     return calendar
 }
 
-fun LocalDate.asCalendar() : Calendar = this.toDateTimeAtCurrentTime().asCalendar()
-fun LocalTime.asCalendar() : Calendar = this.toDateTimeToday().asCalendar()
+fun LocalDate.toCalendar() : Calendar = this.toDateTimeAtCurrentTime().toCalendar()
+fun LocalTime.toCalendar() : Calendar = this.toDateTimeToday().toCalendar()
 
-fun Calendar.asDateTime() : DateTime = DateTime(timeInMillis)
-fun Calendar.asLocalDate() : LocalDate = this.asDateTime().toLocalDate()
-fun Calendar.asLocalTime() : LocalTime = this.asDateTime().toLocalTime()
+fun Calendar.toDateTime() : DateTime = DateTime(timeInMillis)
+fun Calendar.toLocalDate() : LocalDate = this.toDateTime().toLocalDate()
+fun Calendar.toLocalTime() : LocalTime = this.toDateTime().toLocalTime()
 
 fun max(dateTime1 : DateTime, dateTime2 : DateTime) : DateTime  =
     DateTime(Math.max(dateTime1.millis, dateTime2.millis))

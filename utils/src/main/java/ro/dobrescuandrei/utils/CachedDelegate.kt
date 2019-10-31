@@ -11,7 +11,8 @@ class CachedDelegate<R, T>
 {
     companion object
     {
-        val cache : SparseArray<Any> = SparseArray()
+        @JvmStatic
+        private val cache : SparseArray<Any> = SparseArray()
     }
 
     override fun getValue(thisRef: R, property: KProperty<*>): T

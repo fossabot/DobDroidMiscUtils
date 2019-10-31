@@ -13,7 +13,6 @@ abstract class ApiClient
             Retrofit.Builder()
                 .baseUrl("http://www.pdf995.com/")
                 .client(OkHttpClient.Builder()
-                    .socketFactory(RetrofitUtils.newSocketFactoryBypassingConnectivityHealthChecks())
                     .followRedirects(true)
                     .connectTimeout(60, TimeUnit.SECONDS)
                     .writeTimeout(60, TimeUnit.SECONDS)

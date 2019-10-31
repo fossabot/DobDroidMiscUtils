@@ -24,7 +24,7 @@ fun Toolbar.getData() : ToolbarXData
 fun Toolbar.setupBackIcon()
 {
     setNavigationIcon(R.drawable.ic_arrow_left_white_24dp)
-    setNavigationOnClickListener { context.asActivity()!!.onBackPressed() }
+    setNavigationOnClickListener { context.toActivity()!!.onBackPressed() }
 }
 
 fun Toolbar.setMenu(menu : Int)
@@ -39,7 +39,7 @@ fun Toolbar.onOptionsItemSelected(item : MenuItem?)
 {
     if (item?.itemId==android.R.id.home)
     {
-        context.asActivity()!!.onBackPressed()
+        context.toActivity()!!.onBackPressed()
     }
     else
     {

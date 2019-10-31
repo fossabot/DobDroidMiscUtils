@@ -13,7 +13,7 @@ allprojects {
 ```
 ```
 dependencies {
-    implementation 'com.github.andob:DobDroidMiscUtils:v1.2.0'
+    implementation 'com.github.andob:DobDroidMiscUtils:v1.2.1'
 }
 ```
 
@@ -330,8 +330,8 @@ Nil ``DateTime`` / ``LocalDate`` / ``LocalTime`` support (null object pattern) a
 ```kotlin
 var jodaDateTime : DateTime = NilDateTime //01.01.1970
 println("${jodaDateTime.isNil()} ${jodaDateTime.isNotNil()}")
-val calendar : Calendar = jodaDateTime.asCalendar()
-jodaDateTime=calendar.asDateTime()
+val calendar : Calendar = jodaDateTime.toCalendar()
+jodaDateTime=calendar.toDateTime()
 ```
 
 ``DateTimeFormatter`` is an empty ``SimpleDateFormatter`` wrapper. You need to customise this class with your formatting use cases by adding your own extension methods:
