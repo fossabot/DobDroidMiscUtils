@@ -1,4 +1,6 @@
 # DobDroidMiscUtils
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fandob%2FDobDroidMiscUtils.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fandob%2FDobDroidMiscUtils?ref=badge_shield)
+
 
 ### A small and useful set of Android utility classes written in kotlin to reduce boilerplate
 
@@ -509,3 +511,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.`
 ```
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fandob%2FDobDroidMiscUtils.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fandob%2FDobDroidMiscUtils?ref=badge_large)
